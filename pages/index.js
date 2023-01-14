@@ -28,6 +28,14 @@ export default function Home() {
             <h3>Second Post &rarr;</h3>
             <p>Second post using different component.</p>
           </Link>
+            <Link href="/post/third-post" className={styles.card}>
+                <h3>dynamic routes Post &rarr;</h3>
+                <p>dynamic routes post using different component.</p>
+            </Link>
+            <Link href="/post/fourth-post" className={styles.card}>
+                <h3>dynamic routes Post &rarr;</h3>
+                <p>dynamic routes post using different component.</p>
+            </Link>
         </div>
       </main>
 
