@@ -11,7 +11,7 @@ import { gql } from "@apollo/client";
 /*
 * single component first post
 * */
-export default function FirstPost() {
+export default function FirstPost({albums}) {
     return (
         <Layout className={styles.container}>
             <Head>
@@ -39,12 +39,18 @@ export default function FirstPost() {
                         </Link>
                     </p>
                 </div>
+                {albums.map(({ node: { id, title } }) => (
+                    <li key={id}>
+                        {title}
+                        <br />
+                        {id}
+                    </li>
+                ))}
             </main>
         </Layout>);
 }
-
-
-export async function getServerSideProps() {
+export async function getStaticProps() {
+    console.log('getStaticProps called');
     const { data } = await apolloClient.query({
         query: gql`
             query($first: Int, $after: String) {
