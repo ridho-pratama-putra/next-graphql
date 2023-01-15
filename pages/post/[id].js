@@ -8,6 +8,7 @@ import Layout from "../../components/Layout";
 import Alert from "../../components/Alert";
 import apolloClient from "../../configs/apollo-client";
 import {gql} from "@apollo/client";
+import DateComponent from "../../components/DateComponent";
 /*
 * single component first post
 * */
@@ -39,11 +40,12 @@ export default function Post({albums}) {
                         </Link>
                     </p>
                 </div>
-                {albums.map(({node: {id, title}}) => (
+                {albums.map(({node: {id, title, creationDate}}) => (
                     <li key={id}>
                         {title}
                         <br/>
-                        {id}
+                        <DateComponent dateString={creationDate} />
+                        <br/>
                     </li>
                 ))}
             </main>
@@ -61,6 +63,7 @@ export async function getStaticProps({params}) {
                         node {
                             id
                             title
+                            creationDate
                             artist {
                                 name
                             }
@@ -76,7 +79,7 @@ export async function getStaticProps({params}) {
             }
         `,
         variables: {
-            first: 2,
+            first: 3,
             after: "",
         }
     })
