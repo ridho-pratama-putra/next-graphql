@@ -40,6 +40,10 @@ export default function Home() {
                 <h3>dynamic routes Post 5 &rarr;</h3>
                 <p>dynamic routes post using different component.</p>
             </Link>
+            <Link href="/post/sicth-post" className={styles.card}>
+                <h3>dynamic routes Post xxxx &rarr;</h3>
+                <p>dynamic routes post using different component.</p>
+            </Link>
         </div>
       </main>
 

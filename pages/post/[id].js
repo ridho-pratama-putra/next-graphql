@@ -51,12 +51,16 @@ export default function Post({albums}) {
                     <li key={id}>
                         {title}
                         <br/>
-                        <DateComponent dateString={creationDate} />
+                        <DateComponent dateString={creationDate}/>
                         <br/>
                     </li>
                 ))}
             </main>
         </Layout>);
+}
+
+function delay(time) {
+    return new Promise(resolve => setTimeout(resolve, time));
 }
 
 export async function getStaticProps({params}) {
@@ -132,7 +136,8 @@ export async function getStaticPaths() {
     ]
     /*
     * fallback true will ignore render 404.
-    * when path is not exist isFallback will have true value and show loading.. then show page
+    * when path is not exist (via url or refresh), isFallback will have TRUE value and show loading.. then show page
+    * when path is not exist (via <Link>), isFallback will have FALSE value and NOT show loading.. then show page
     * */
     return {
         paths,
