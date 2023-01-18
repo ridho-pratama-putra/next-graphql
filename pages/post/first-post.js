@@ -7,7 +7,7 @@ import ImageLayout from "../../components/ImageLayout";
 import Layout from "../../components/Layout";
 import Alert from "../../components/Alert";
 import apolloClient from "../../configs/apollo-client";
-import { gql } from "@apollo/client";
+import {gql} from "@apollo/client";
 /*
 * single component first post
 * */
@@ -39,54 +39,64 @@ export default function FirstPost({albums}) {
                         </Link>
                     </p>
                 </div>
-                {albums.map(({ node: { id, title } }) => (
+                {albums !== null && albums.map(({node: {id, title}}) => (
                     <li key={id}>
                         {title}
-                        <br />
+                        <br/>
                         {id}
                     </li>
                 ))}
+                {albums == null && (<p>Try again later</p>)}
             </main>
         </Layout>);
 }
+
 export async function getStaticProps() {
     console.log('getStaticProps called');
-    const { data } = await apolloClient.query({
-        query: gql`
-            query($first: Int, $after: String) {
-                allAlbums(first: $first, after: $after) {
-                    edges {
-                        cursor
-                        node {
-                            id
-                            title
-                            artist {
-                                name
+    try {
+        const {data} = await apolloClient.query({
+            query: gql`
+                query($first: Int, $after: String) {
+                    allAlbums(first: $first, after: $after) {
+                        edges {
+                            cursor
+                            node {
+                                id
+                                title
+                                artist {
+                                    name
+                                }
                             }
                         }
-                    }
-                    pageInfo {
-                        hasPreviousPage
-                        hasNextPage
-                        startCursor
-                        endCursor
+                        pageInfo {
+                            hasPreviousPage
+                            hasNextPage
+                            startCursor
+                            endCursor
+                        }
                     }
                 }
+            `,
+            variables: {
+                first: 2,
+                after: "",
             }
-        `,
-        variables: {
-            first : 2,
-            after: "",
+        })
+        return {
+            props: {
+                albums: data.allAlbums.edges,
+                pageInfo: {
+                    hasPreviousPage: data.allAlbums.pageInfo.hasPreviousPage,
+                    hasNextPage: data.allAlbums.pageInfo.hasNextPage,
+                    startCursor: data.allAlbums.pageInfo.startCursor,
+                    endCursor: data.allAlbums.pageInfo.endCursor
+                }
+            }
         }
-    })
-    return {
-        props: {
-            albums: data.allAlbums.edges,
-            pageInfo: {
-                hasPreviousPage: data.allAlbums.pageInfo.hasPreviousPage,
-                hasNextPage: data.allAlbums.pageInfo.hasNextPage,
-                startCursor: data.allAlbums.pageInfo.startCursor,
-                endCursor: data.allAlbums.pageInfo.endCursor
+    } catch (e) {
+        return {
+            props: {
+                albums: null
             }
         }
     }

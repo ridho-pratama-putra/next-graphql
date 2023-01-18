@@ -40,7 +40,7 @@ export default function Post({albums}) {
                         </Link>
                     </p>
                 </div>
-                {albums == null && (<div>Try Again  later</div>)}
+                {(albums == null) && (<div>Try Again later</div>)}
                 {albums !== null && albums.map(({node: {id, title, creationDate}}) => (
                     <li key={id}>
                         {title}
@@ -126,6 +126,6 @@ export async function getStaticPaths() {
     ]
     return {
         paths,
-        fallback: false,
+        fallback: false, // fallback true will ignore render 404
     };
 }

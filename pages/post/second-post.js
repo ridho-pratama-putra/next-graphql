@@ -7,7 +7,7 @@ import ImageLayout from "../../components/ImageLayout";
 import Layout from "../../components/Layout";
 import Alert from "../../components/Alert";
 import apolloClient from "../../configs/apollo-client";
-import { gql } from "@apollo/client";
+import {gql} from "@apollo/client";
 /*
 * single component first post
 * */
@@ -35,31 +35,39 @@ export default function FirstPost({artist}) {
                         </Link>
                     </p>
                 </div>
-                    <li key={artist.id}>
-                        {artist.name}
-                    </li>
+                {artist !== null && (<li key={artist.id}>
+                    {artist.name}
+                </li>)}
             </main>
         </Layout>);
 }
 
 export async function getServerSideProps() {
-    console.log('getServerSideProps called');
-    const { data } = await apolloClient.query({
-        query: gql`
-            query($id: ID) {
-                artistById(id: $id) {
-                    id
-                    name
+    try {
+        console.log('getServerSideProps called');
+        const {data} = await apolloClient.query({
+            query: gql`
+                query($id: ID) {
+                    artistById(id: $id) {
+                        id
+                        name
+                    }
                 }
+            `,
+            variables: {
+                id: "63b00e9a0af151471889d0df"
             }
-        `,
-        variables: {
-            id: "63b00e9a0af151471889d0df"
+        })
+        return {
+            props: {
+                artist: data.artistById
+            }
         }
-    })
-    return {
-        props: {
-            artist: data.artistById
+    } catch (e) {
+        return {
+            props: {
+                artist: null
+            }
         }
     }
 }
