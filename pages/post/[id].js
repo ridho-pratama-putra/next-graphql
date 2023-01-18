@@ -9,10 +9,16 @@ import Alert from "../../components/Alert";
 import apolloClient from "../../configs/apollo-client";
 import {gql} from "@apollo/client";
 import DateComponent from "../../components/DateComponent";
+import {useRouter} from "next/router";
 /*
 * single component first post
 * */
 export default function Post({albums}) {
+    const router = useRouter()
+    if (router.isFallback) {
+        return <div>Loading nihh bosss...</div>
+    }
+
     return (
         <Layout className={styles.container}>
             <Head>
@@ -124,8 +130,12 @@ export async function getStaticPaths() {
             }
         }
     ]
+    /*
+    * fallback true will ignore render 404.
+    * when path is not exist isFallback will have true value and show loading.. then show page
+    * */
     return {
         paths,
-        fallback: false, // fallback true will ignore render 404
+        fallback: true,
     };
 }
