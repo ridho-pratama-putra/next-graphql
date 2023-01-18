@@ -40,7 +40,8 @@ export default function Post({albums}) {
                         </Link>
                     </p>
                 </div>
-                {albums.map(({node: {id, title, creationDate}}) => (
+                {albums == null && (<div>Try Again  later</div>)}
+                {albums !== null && albums.map(({node: {id, title, creationDate}}) => (
                     <li key={id}>
                         {title}
                         <br/>
@@ -54,43 +55,51 @@ export default function Post({albums}) {
 
 export async function getStaticProps({params}) {
     console.log('getStaticProps called', params);
-    const {data} = await apolloClient.query({
-        query: gql`
-            query($first: Int, $after: String) {
-                allAlbums(first: $first, after: $after) {
-                    edges {
-                        cursor
-                        node {
-                            id
-                            title
-                            creationDate
-                            artist {
-                                name
+    try {
+        const {data} = await apolloClient.query({
+            query: gql`
+                query($first: Int, $after: String) {
+                    allAlbums(first: $first, after: $after) {
+                        edges {
+                            cursor
+                            node {
+                                id
+                                title
+                                creationDate
+                                artist {
+                                    name
+                                }
                             }
                         }
-                    }
-                    pageInfo {
-                        hasPreviousPage
-                        hasNextPage
-                        startCursor
-                        endCursor
+                        pageInfo {
+                            hasPreviousPage
+                            hasNextPage
+                            startCursor
+                            endCursor
+                        }
                     }
                 }
+            `,
+            variables: {
+                first: 3,
+                after: "",
             }
-        `,
-        variables: {
-            first: 3,
-            after: "",
+        })
+        return {
+            props: {
+                albums: data.allAlbums.edges,
+                pageInfo: {
+                    hasPreviousPage: data.allAlbums.pageInfo.hasPreviousPage,
+                    hasNextPage: data.allAlbums.pageInfo.hasNextPage,
+                    startCursor: data.allAlbums.pageInfo.startCursor,
+                    endCursor: data.allAlbums.pageInfo.endCursor
+                }
+            }
         }
-    })
-    return {
-        props: {
-            albums: data.allAlbums.edges,
-            pageInfo: {
-                hasPreviousPage: data.allAlbums.pageInfo.hasPreviousPage,
-                hasNextPage: data.allAlbums.pageInfo.hasNextPage,
-                startCursor: data.allAlbums.pageInfo.startCursor,
-                endCursor: data.allAlbums.pageInfo.endCursor
+    } catch (e) {
+        return {
+            props: {
+                albums: null
             }
         }
     }
