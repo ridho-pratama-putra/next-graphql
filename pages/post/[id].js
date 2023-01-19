@@ -6,8 +6,6 @@ import Script from "next/script";
 import ImageLayout from "../../components/ImageLayout";
 import Layout from "../../components/Layout";
 import Alert from "../../components/Alert";
-import apolloClient from "../../configs/apollo-client";
-import {gql} from "@apollo/client";
 import DateComponent from "../../components/DateComponent";
 import {useRouter} from "next/router";
 import {loadAllAlbums} from "../../lib/load-all-albums";

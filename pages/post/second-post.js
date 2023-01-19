@@ -8,6 +8,7 @@ import Layout from "../../components/Layout";
 import Alert from "../../components/Alert";
 import apolloClient from "../../configs/apollo-client";
 import {gql} from "@apollo/client";
+import {loadArtisById} from "../../lib/load-artis-by-id";
 /*
 * single component first post
 * */
@@ -45,19 +46,7 @@ export default function FirstPost({artist}) {
 export async function getServerSideProps() {
     try {
         console.log('getServerSideProps called');
-        const {data} = await apolloClient.query({
-            query: gql`
-                query($id: ID) {
-                    artistById(id: $id) {
-                        id
-                        name
-                    }
-                }
-            `,
-            variables: {
-                id: "63b00e9a0af151471889d0df"
-            }
-        })
+        let data = await loadArtisById("63b00e9a0af151471889d0df");
         return {
             props: {
                 artist: data.artistById
