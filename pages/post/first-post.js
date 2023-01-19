@@ -8,6 +8,7 @@ import Layout from "../../components/Layout";
 import Alert from "../../components/Alert";
 import apolloClient from "../../configs/apollo-client";
 import {gql} from "@apollo/client";
+import {loadAllAlbums} from "../../lib/load-all-albums";
 /*
 * single component first post
 * */
@@ -54,34 +55,7 @@ export default function FirstPost({albums}) {
 export async function getStaticProps() {
     console.log('getStaticProps called');
     try {
-        const {data} = await apolloClient.query({
-            query: gql`
-                query($first: Int, $after: String) {
-                    allAlbums(first: $first, after: $after) {
-                        edges {
-                            cursor
-                            node {
-                                id
-                                title
-                                artist {
-                                    name
-                                }
-                            }
-                        }
-                        pageInfo {
-                            hasPreviousPage
-                            hasNextPage
-                            startCursor
-                            endCursor
-                        }
-                    }
-                }
-            `,
-            variables: {
-                first: 2,
-                after: "",
-            }
-        })
+        let data = await loadAllAlbums();
         return {
             props: {
                 albums: data.allAlbums.edges,

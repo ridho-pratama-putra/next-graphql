@@ -10,6 +10,7 @@ import apolloClient from "../../configs/apollo-client";
 import {gql} from "@apollo/client";
 import DateComponent from "../../components/DateComponent";
 import {useRouter} from "next/router";
+import {loadAllAlbums} from "../../lib/load-all-albums";
 /*
 * single component first post
 * */
@@ -59,42 +60,9 @@ export default function Post({albums}) {
         </Layout>);
 }
 
-function delay(time) {
-    return new Promise(resolve => setTimeout(resolve, time));
-}
-
 export async function getStaticProps({params}) {
-    console.log('getStaticProps called', params);
     try {
-        const {data} = await apolloClient.query({
-            query: gql`
-                query($first: Int, $after: String) {
-                    allAlbums(first: $first, after: $after) {
-                        edges {
-                            cursor
-                            node {
-                                id
-                                title
-                                creationDate
-                                artist {
-                                    name
-                                }
-                            }
-                        }
-                        pageInfo {
-                            hasPreviousPage
-                            hasNextPage
-                            startCursor
-                            endCursor
-                        }
-                    }
-                }
-            `,
-            variables: {
-                first: 3,
-                after: "",
-            }
-        })
+        let data = await loadAllAlbums();
         return {
             props: {
                 albums: data.allAlbums.edges,
@@ -116,7 +84,6 @@ export async function getStaticProps({params}) {
 }
 
 export async function getStaticPaths() {
-    console.log('getStaticPaths called')
     // paths.params.id --> should be the same as stated in filename
     const paths = [
         {
