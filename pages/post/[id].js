@@ -60,15 +60,15 @@ export default function Post({albums}) {
 
 export async function getStaticProps({params}) {
     try {
-        let data = await loadAllReleases(2, "");
+        let data = await loadAllReleases(3, "");
         return {
             props: {
-                albums: data.allAlbums.edges,
+                albums: data.allReleases.edges,
                 pageInfo: {
-                    hasPreviousPage: data.allAlbums.pageInfo.hasPreviousPage,
-                    hasNextPage: data.allAlbums.pageInfo.hasNextPage,
-                    startCursor: data.allAlbums.pageInfo.startCursor,
-                    endCursor: data.allAlbums.pageInfo.endCursor
+                    hasPreviousPage: data.allReleases.pageInfo.hasPreviousPage,
+                    hasNextPage: data.allReleases.pageInfo.hasNextPage,
+                    startCursor: data.allReleases.pageInfo.startCursor,
+                    endCursor: data.allReleases.pageInfo.endCursor
                 }
             }
         }

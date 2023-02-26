@@ -48,10 +48,8 @@ export default function FirstPost({albums}) {
 }
 
 export async function getStaticProps() {
-    console.log('getStaticProps called');
     try {
         let data = await loadAllReleases(3, "");
-        await console.log('loaded album ', data)
         return {
             props: {
                 albums: data.allReleases.edges,
