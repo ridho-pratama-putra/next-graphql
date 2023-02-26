@@ -6,8 +6,6 @@ import Script from "next/script";
 import ImageLayout from "../../components/ImageLayout";
 import Layout from "../../components/Layout";
 import Alert from "../../components/Alert";
-import apolloClient from "../../configs/apollo-client";
-import {gql} from "@apollo/client";
 import {loadArtisById} from "../../lib/load-artis-by-id";
 /*
 * single component first post
@@ -30,6 +28,7 @@ export default function FirstPost({artist}) {
                 <div className={styles.card}>
                     <h1 className={utilsStyles.heading2Xl}>Second Post</h1>
                     <ImageLayout imageSource="/images/img.png"></ImageLayout>
+                    <p className={utilsStyles.headingXl}>implementation of getServerSideProps</p>
                     <p className={utilsStyles.padding30px}>
                         <Link href="/">
                             &larr;back to Dashboard
@@ -39,6 +38,7 @@ export default function FirstPost({artist}) {
                 {artist !== null && (<li key={artist.id}>
                     {artist.name}
                 </li>)}
+                {artist == null && (<p>Try again later</p>)}
             </main>
         </Layout>);
 }
@@ -46,7 +46,8 @@ export default function FirstPost({artist}) {
 export async function getServerSideProps() {
     try {
         console.log('getServerSideProps called');
-        let data = await loadArtisById("63b00e9a0af151471889d0df");
+        let data = await loadArtisById("63c911b6a272812098224d7c");
+        await console.log('loaded data')
         return {
             props: {
                 artist: data.artistById

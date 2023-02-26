@@ -8,7 +8,7 @@ import Layout from "../../components/Layout";
 import Alert from "../../components/Alert";
 import DateComponent from "../../components/DateComponent";
 import {useRouter} from "next/router";
-import {loadAllAlbums} from "../../lib/load-all-albums";
+import {loadAllReleases} from "../../lib/load-all-releases";
 /*
 * single component first post
 * */
@@ -60,7 +60,7 @@ export default function Post({albums}) {
 
 export async function getStaticProps({params}) {
     try {
-        let data = await loadAllAlbums(2, "");
+        let data = await loadAllReleases(2, "");
         return {
             props: {
                 albums: data.allAlbums.edges,

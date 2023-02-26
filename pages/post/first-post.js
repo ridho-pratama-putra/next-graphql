@@ -8,7 +8,7 @@ import Layout from "../../components/Layout";
 import Alert from "../../components/Alert";
 import apolloClient from "../../configs/apollo-client";
 import {gql} from "@apollo/client";
-import {loadAllAlbums} from "../../lib/load-all-albums";
+import {loadAllReleases} from "../../lib/load-all-releases";
 /*
 * single component first post
 * */
@@ -30,10 +30,7 @@ export default function FirstPost({albums}) {
                 <div className={styles.card}>
                     <h1 className={utilsStyles.heading2Xl}>First Post</h1>
                     <ImageLayout imageSource="/images/img.png"></ImageLayout>
-                    <p className={utilsStyles.headingXl}>Lets make group call by entering room name</p>
-                    <p className={utilsStyles.headingMd}>this group call will be recorded, please allow permissions for
-                        mic & camera
-                    </p>
+                    <p className={utilsStyles.headingXl}>implementation of getStaticProps</p>
                     <p className={utilsStyles.padding30px}>
                         <Link href="/">
                             &larr;back to Dashboard
@@ -42,9 +39,7 @@ export default function FirstPost({albums}) {
                 </div>
                 {albums !== null && albums.map(({node: {id, title}}) => (
                     <li key={id}>
-                        {title}
-                        <br/>
-                        {id}
+                        {title} ({id})
                     </li>
                 ))}
                 {albums == null && (<p>Try again later</p>)}
@@ -55,15 +50,16 @@ export default function FirstPost({albums}) {
 export async function getStaticProps() {
     console.log('getStaticProps called');
     try {
-        let data = await loadAllAlbums(3, "");
+        let data = await loadAllReleases(3, "");
+        await console.log('loaded album ', data)
         return {
             props: {
-                albums: data.allAlbums.edges,
+                albums: data.allReleases.edges,
                 pageInfo: {
-                    hasPreviousPage: data.allAlbums.pageInfo.hasPreviousPage,
-                    hasNextPage: data.allAlbums.pageInfo.hasNextPage,
-                    startCursor: data.allAlbums.pageInfo.startCursor,
-                    endCursor: data.allAlbums.pageInfo.endCursor
+                    hasPreviousPage: data.allReleases.pageInfo.hasPreviousPage,
+                    hasNextPage: data.allReleases.pageInfo.hasNextPage,
+                    startCursor: data.allReleases.pageInfo.startCursor,
+                    endCursor: data.allReleases.pageInfo.endCursor
                 }
             }
         }
