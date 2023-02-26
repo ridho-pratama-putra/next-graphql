@@ -20,27 +20,27 @@ export default function Home() {
         </p>
 
         <div className={styles.grid}>
-          <Link href="/post/first-post" className={styles.card}>
+          <Link href="/posts/first-post" className={styles.card}>
             <h3>First Post &rarr;</h3>
             <p>implementation of getStaticProps.</p>
           </Link>
-          <Link href="/post/second-post" className={styles.card}>
+          <Link href="/posts/second-post" className={styles.card}>
             <h3>Second Post &rarr;</h3>
             <p>implementation of getServerSideProps.</p>
           </Link>
-            <Link href="/post/third-post" className={styles.card}>
+            <Link href="/posts/third-post" className={styles.card}>
                 <h3>dynamic routes Post 3 &rarr;</h3>
                 <p>implementation of getStaticProps</p>
             </Link>
-            <Link href="/post/fourth-post" className={styles.card}>
+            <Link href="/posts/fourth-post" className={styles.card}>
                 <h3>dynamic routes Post 4 &rarr;</h3>
                 <p>implementation of getStaticProps</p>
             </Link>
-            <Link href="/post/fifth-post" className={styles.card}>
+            <Link href="/posts/fifth-post" className={styles.card}>
                 <h3>dynamic routes Post 5 &rarr;</h3>
                 <p>implementation of getStaticProps.</p>
             </Link>
-            <Link href="/post/sicth-post" className={styles.card}>
+            <Link href="/posts/sicth-post" className={styles.card}>
                 <h3>dynamic routes Post sicth &rarr;</h3>
                 <p>implementation of getStaticProps.</p>
             </Link>
