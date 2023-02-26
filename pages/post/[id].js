@@ -60,7 +60,7 @@ export default function Post({albums}) {
 
 export async function getStaticProps({params}) {
     try {
-        let data = await loadAllAlbums();
+        let data = await loadAllAlbums(2, "");
         return {
             props: {
                 albums: data.allAlbums.edges,

@@ -1,7 +1,8 @@
 This is a starter template for [Learn Next.js](https://nextjs.org/learn).
 
 nextjs & graphql
-###getStaticProps:
+
+@getStaticProps:
 - is used when The data required to render the page is available at build time ahead of a user’s request
 - is used when The data comes from a headless CMS
 - is used when The page must be pre-rendered (for SEO) and be very fast — getStaticProps generates HTML and JSON files, both of which can be cached by a CDN for performance

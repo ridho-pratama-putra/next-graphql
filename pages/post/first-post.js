@@ -55,7 +55,7 @@ export default function FirstPost({albums}) {
 export async function getStaticProps() {
     console.log('getStaticProps called');
     try {
-        let data = await loadAllAlbums();
+        let data = await loadAllAlbums(3, "");
         return {
             props: {
                 albums: data.allAlbums.edges,
