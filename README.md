@@ -9,7 +9,7 @@ nextjs & graphql
 - is used when The data can be publicly cached (not user-specific). This condition can be bypassed in certain specific situation by using a Middleware to rewrite the path.
 - always runs on the server and never on the client (you can validate via https://next-code-elimination.vercel.app/ will not show body of getStaticProps)
 
-@tus.io & formidalbe
-- in component (relaese-form.js) should not define header content-type, its automatically recognized as multipart/form-data. defining it manually will causing formidable cant find boundary that generate by browser each form submitted 
+@tus.io & formidable
+- in component (release-form.js) should not define header content-type, its automatically recognized as multipart/form-data. defining it manually will causing formidable cant find boundary that generate by browser each form submitted 
 
 

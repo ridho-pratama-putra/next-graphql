@@ -26,10 +26,11 @@ export default function handler(req, res) {
         parsedFileType = fileType;
         console.log('prepare')
         const fileToBeConvert = files.file;
-        console.log('fileToBeConvert' , fileToBeConvert)
+        // console.log('fileToBeConvert' , fileToBeConvert)
         const buffer = fs.readFileSync(fileToBeConvert.filepath);
+        const bufferWithFilename = Buffer.from(buffer, fileToBeConvert.originalFilename);
         // Create a new tus upload
-        const upload = new Upload(buffer, {
+        const upload = new Upload(bufferWithFilename, {
             // Endpoint is the upload creation URL from your tus server
             endpoint: "http://localhost:8080/files/",
             // Retry delays will enable tus-js-client to automatically retry on errors
@@ -52,6 +53,7 @@ export default function handler(req, res) {
             // Callback for once the upload is completed
             onSuccess: function () {
                 console.log("Download %s from %s", upload.file.name, upload.url)
+                res.status(201).json({data: upload.url})
             }
         });
 
@@ -66,5 +68,5 @@ export default function handler(req, res) {
             upload.start()
         })
     });
-    console.log('fields')
+    console.log('fieldss')
 }
