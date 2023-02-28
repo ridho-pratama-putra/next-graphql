@@ -47,15 +47,15 @@ function ReleaseForm() {
         const imageEndpoint = '/api/file';
         const formData = new FormData();
         formData.append("file", event.target.file.files[0]);
-        formData.append("fileName", event.target.file.name);
-        formData.append("fileType", event.target.file.type);
+        formData.append("fileName", event.target.file.files[0].name);
+        formData.append("fileType", event.target.file.files[0].type);
 
         // Form the request for sending data to the server.
         const imageOptions = {
             // The method is POST because we are sending data.
             method: 'POST',
             // Body of the request is the JSON data we created above.
-            body: formData
+            body: formData,
         }
 
         // Send the form data to our forms API on Vercel and get a response.

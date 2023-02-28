@@ -10,35 +10,26 @@ export const config = {
 }
 export default function handler(req, res) {
     console.log('yea u coming ')
-
-    // Get the selected file from the input element
-    let parsedFileName;
-    let parsedFileType;
-
     const form = new formidable.IncomingForm();
-    console.log('prepare parsing')
     form.parse(req, (err, fields, files) => {
         if (err) throw err;
 
+        const { fileName, fileType} = fields;
+
         // Mengakses nilai-nilai form yang sudah diparse
-        const { fileName, fileType } = fields;
-        parsedFileName = fileName;
-        parsedFileType = fileType;
-        console.log('prepare')
         const fileToBeConvert = files.file;
-        // console.log('fileToBeConvert' , fileToBeConvert)
         const buffer = fs.readFileSync(fileToBeConvert.filepath);
-        const bufferWithFilename = Buffer.from(buffer, fileToBeConvert.originalFilename);
         // Create a new tus upload
-        const upload = new Upload(bufferWithFilename, {
+        const upload = new Upload(buffer, {
             // Endpoint is the upload creation URL from your tus server
             endpoint: "http://localhost:8080/files/",
             // Retry delays will enable tus-js-client to automatically retry on errors
             retryDelays: [0, 3000, 5000, 10000, 20000],
+            chunkSize: 1024 * 512,
             // Attach additional metadata about the file for the server
             metadata: {
-                filename: parsedFileName,
-                filetype: parsedFileType
+                filename: fileName,
+                filetype: fileType
             },
             // Callback for errors which cannot be fixed using retries
             onError: function (error) {
@@ -67,6 +58,6 @@ export default function handler(req, res) {
             // Start the upload
             upload.start()
         })
-    });
+    })
     console.log('fieldss')
 }
