@@ -2,6 +2,7 @@ import {Upload} from "tus-js-client";
 import {console} from "next/dist/compiled/@edge-runtime/primitives/console";
 import formidable from "formidable";
 import fs from "fs";
+import useStore from "@/store/songUploadProgressStore"
 
 export const config = {
     api: {
@@ -10,6 +11,7 @@ export const config = {
 }
 export default function handler(req, res) {
     console.log('yea u coming ')
+    const { setProgress } = useStore();
     const form = new formidable.IncomingForm();
     form.parse(req, (err, fields, files) => {
         if (err) throw err;
@@ -40,6 +42,7 @@ export default function handler(req, res) {
             onProgress: function (bytesUploaded, bytesTotal) {
                 const percentage = (bytesUploaded / bytesTotal * 100).toFixed(2);
                 console.log(bytesUploaded, bytesTotal, percentage + "%")
+                setProgress(percentage)
             },
             // Callback for once the upload is completed
             onSuccess: function () {
