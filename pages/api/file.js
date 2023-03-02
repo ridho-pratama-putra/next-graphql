@@ -2,7 +2,6 @@ import {Upload} from "tus-js-client";
 import {console} from "next/dist/compiled/@edge-runtime/primitives/console";
 import formidable from "formidable";
 import fs from "fs";
-import useStore from "@/store/songUploadProgressStore"
 
 export const config = {
     api: {
@@ -11,7 +10,6 @@ export const config = {
 }
 export default function handler(req, res) {
     console.log('yea u coming ')
-    const { setProgress } = useStore();
     const form = new formidable.IncomingForm();
     form.parse(req, (err, fields, files) => {
         if (err) throw err;
@@ -36,18 +34,18 @@ export default function handler(req, res) {
             // Callback for errors which cannot be fixed using retries
             onError: function (error) {
                 console.log("Failed because: " + error)
-                return res.status(400).json({ data: `Failed because: ${error} `})
+                return res.status(400).json({ payload: `Failed because: ${error} `, status: 'in progress'})
             },
             // Callback for reporting upload progress
             onProgress: function (bytesUploaded, bytesTotal) {
                 const percentage = (bytesUploaded / bytesTotal * 100).toFixed(2);
                 console.log(bytesUploaded, bytesTotal, percentage + "%")
-                setProgress(percentage)
+                // res.status(HttpStatusCode.Processing).json({payload: `${percentage}%`, status: 'in progress'})
             },
             // Callback for once the upload is completed
             onSuccess: function () {
-                console.log("Download %s from %s", upload.file.name, upload.url)
-                res.status(201).json({data: upload.url})
+                console.log("Download %s from %s", upload, upload.url)
+                res.status(201).json({payload: upload.url, status: 'success'})
             }
         });
 

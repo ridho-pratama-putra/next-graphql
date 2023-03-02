@@ -20,7 +20,13 @@ function ReleaseForm() {
         const imageResponse = await fetch(imageEndpoint, imageOptions)
 
         const imageResult = await imageResponse.json()
-        alert(`download with this url : ${imageResult.data}`)
+        if (imageResult.status === 'in progress') {
+            console.log('masih')
+        } else if (imageResult.status === 'success') {
+            console.log('sudah')
+        } else {
+        console.log('lain')
+    }
     }
 
     console.log('render')
