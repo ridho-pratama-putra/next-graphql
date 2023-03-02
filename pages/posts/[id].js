@@ -1,14 +1,14 @@
-import styles from "../../styles/FirstPost.module.css";
-import utilsStyles from "../../styles/Utils.module.css";
+import styles from "@/styles/FirstPost.module.css";
+import utilsStyles from "@/styles/Utils.module.css";
 import Link from "next/link";
 import Head from "next/head";
 import Script from "next/script";
-import ImageLayout from "../../components/ImageLayout";
-import Layout from "../../components/Layout";
-import Alert from "../../components/Alert";
-import DateComponent from "../../components/DateComponent";
+import ImageLayout from "@/components/ImageLayout";
+import Layout from "@/components/Layout";
+import Alert from "@/components/Alert";
+import DateComponent from "@/components/DateComponent";
 import {useRouter} from "next/router";
-import {loadAllReleases} from "../../lib/load-all-releases";
+import {loadAllReleases} from "@/lib/load-all-releases";
 /*
 * single component first post
 * */

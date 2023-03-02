@@ -1,12 +1,12 @@
-import styles from "../../styles/FirstPost.module.css";
-import utilsStyles from "../../styles/Utils.module.css";
+import styles from "@/styles/FirstPost.module.css";
+import utilsStyles from "@/styles/Utils.module.css";
 import Link from "next/link";
 import Head from "next/head";
 import Script from "next/script";
-import ImageLayout from "../../components/ImageLayout";
-import Layout from "../../components/Layout";
-import Alert from "../../components/Alert";
-import {loadArtisById} from "../../lib/load-artis-by-id";
+import ImageLayout from "@/components/ImageLayout";
+import Layout from "@/components/Layout";
+import Alert from "@/components/Alert";
+import {loadArtisById} from "@/lib/load-artis-by-id";
 /*
 * single component first post
 * */
