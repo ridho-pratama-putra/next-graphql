@@ -1,6 +1,13 @@
 import React from 'react';
+import { useSelector, useDispatch } from 'react-redux'
+import { plusOne, updateUploadProgress } from '@/redux/fileUploadProgressSlice'
+import {store} from '@/redux/store'
 
 function ReleaseForm() {
+    const dispatch = useDispatch();
+    const progress = useSelector((state) => {
+        return state.fileUploadProgress.value
+    })
 
     const handleSubmit = async (event) => {
         event.preventDefault()
@@ -21,7 +28,7 @@ function ReleaseForm() {
 
         const response = await fetch(endpoint, options)
         const result = await response.json()
-        alert(`Is this your full name: ${result.data}`)
+        // alert(`Is this your full name: ${result.data}`)
         const imageEndpoint = '/api/file';
         const formData = new FormData();
         formData.append("file", event.target.file.files[0]);
@@ -34,7 +41,7 @@ function ReleaseForm() {
 
         const imageResponse = await fetch(imageEndpoint, imageOptions)
         const imageResult = await imageResponse.json()
-        alert(`Is this your imageResult: ${imageResult.data}`)
+        console.log(`imageResult :: ${imageResult.data}`);
     }
 
     return (
@@ -48,6 +55,9 @@ function ReleaseForm() {
                 <input type="file" id="file" name="file"/>
                 <button type="submit">Submit</button>
             </form>
+            <button onClick={() => dispatch(plusOne())}>+</button>
+            <button onClick={() => store.dispatch(updateUploadProgress(9))}>updateUploadProgress</button>
+            <p>Progress {progress}% </p>
         </div>
     );
 }
