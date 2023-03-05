@@ -15,7 +15,7 @@ export const fileUploadProgressSlice = createSlice({
         updateUploadProgress: (state, action) => {
             const result = Number(action.payload);
             console.log(state.value, " :: ", result, ' = ', typeof result)
-            state.value += result
+            state.value = result
         },
     },
 })

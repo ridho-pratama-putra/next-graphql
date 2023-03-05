@@ -7,10 +7,13 @@ import ImageLayout from "@/components/ImageLayout";
 import Layout from "@/components/Layout";
 import Alert from "@/components/Alert";
 import {loadAllReleases} from "@/lib/load-all-releases";
+import {useSelector} from "react-redux";
 /*
 * single component first post
 * */
 export default function FirstPost({albums}) {
+
+    const progress = useSelector((state) => state.fileUploadProgress.value);
     return (
         <Layout className={styles.container}>
             <Head>
@@ -28,7 +31,7 @@ export default function FirstPost({albums}) {
                 <div className={styles.card}>
                     <h1 className={utilsStyles.heading2Xl}>First Post</h1>
                     <ImageLayout imageSource="/images/img.png"></ImageLayout>
-                    <p className={utilsStyles.headingXl}>implementation of getStaticProps</p>
+                    <p className={utilsStyles.headingXl}>implementation of getStaticProps</p> {progress}
                     <p className={utilsStyles.padding30px}>
                         <Link href="/">
                             &larr;back to Dashboard
