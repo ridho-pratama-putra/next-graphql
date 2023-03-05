@@ -1,8 +1,6 @@
 import React from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { plusOne, updateUploadProgress } from '@/redux/fileUploadProgressSlice'
-import {store} from '@/redux/store'
-import { tusUploadProcess } from '@/lib/upload'
+import { plusOne } from '@/redux/fileUploadProgressSlice'
 
 import { upload } from '@/lib/upload'
 
@@ -61,7 +59,6 @@ function ReleaseForm() {
                 <button type="submit">Submit</button>
             </form>
             <button onClick={() => dispatch(plusOne())}>+</button>
-            <button onClick={() => tusUploadProcess.pause()}>pause</button>
             <p>Progress {progress}% </p>
         </div>
     );
