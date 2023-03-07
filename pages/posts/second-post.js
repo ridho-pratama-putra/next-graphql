@@ -3,9 +3,9 @@ import utilsStyles from "@/styles/Utils.module.css";
 import Link from "next/link";
 import Head from "next/head";
 import Script from "next/script";
-import ImageLayout from "@/components/ImageLayout";
-import Layout from "@/components/Layout";
-import Alert from "@/components/Alert";
+import ImageLayout from "@/components/image-layout";
+import Layout from "@/components/layout";
+import Alert from "@/components/alert";
 import {loadArtisById} from "@/lib/load-artis-by-id";
 /*
 * single component first post
