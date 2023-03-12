@@ -9,14 +9,12 @@ export const fileUploadProgressSlice = createSlice({
     initialState: initialState,
     reducers: {
         updateUploadProgress: (state, action) => {
-            const result = Number(action.payload);
-            console.log(state.value, " :: ", result, ' = ', typeof result)
-            state.value = result
+            state.value = Number(action.payload)
         },
     },
 })
 
 // Action creators are generated for each case reducer function
-export const {updateUploadProgress, plusOne} = fileUploadProgressSlice.actions
+export const {updateUploadProgress} = fileUploadProgressSlice.actions
 
 export default fileUploadProgressSlice.reducer

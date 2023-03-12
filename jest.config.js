@@ -16,6 +16,7 @@ const customJestConfig = {
     moduleNameMapper: {
         '^@/components/(.*)$': '<rootDir>/components/$1',
         '^@/pages/(.*)$': '<rootDir>/pages/$1',
+        '^@/redux/(.*)$': '<rootDir>/redux/$1',
     }
 }
 

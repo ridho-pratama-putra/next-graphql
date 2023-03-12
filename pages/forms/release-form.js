@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import { useSelector, useDispatch } from 'react-redux'
 
 import { upload } from '@/lib/upload'
-import {setProcess} from "@/redux/fileUploadProcessSlice";
+import {resetProcess, setProcess} from "@/redux/fileUploadProcessSlice";
 
 function ReleaseForm() {
     const dispatch = useDispatch();
@@ -24,7 +24,7 @@ function ReleaseForm() {
         if (100 === progress) {
             setDisabledForm(false);
             fileFormRef.current.value = null;
-            dispatch(setProcess(null))
+            dispatch(resetProcess(null))
         }
         return () => {};
     }, [progress]);
