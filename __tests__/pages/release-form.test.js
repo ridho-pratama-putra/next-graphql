@@ -1,4 +1,4 @@
-import {render, screen, fireEvent, waitFor, act} from '@testing-library/react'
+import {render, screen, fireEvent, waitFor} from '@testing-library/react'
 import ReleaseForm from '@/pages/forms/release-form'
 import '@testing-library/jest-dom'
 import {Provider} from "react-redux";
@@ -104,10 +104,9 @@ describe('ReleaseForm', function () {
         });
     });
 
-    it('should call resumeFromPreviousUpload when click pause', function (done) {
+    it('should call resumeFromPreviousUpload when click resume', function (done) {
         render(<Provider store={store}><ReleaseForm/></Provider>);
         const mockResumeFromPreviousUpload = jest.fn();
-        const mockAbort = jest.fn();
         upload.mockImplementationOnce(() => Promise.resolve({
             start: jest.fn(),
             abort: jest.fn(),
