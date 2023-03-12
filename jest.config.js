@@ -17,6 +17,7 @@ const customJestConfig = {
         '^@/components/(.*)$': '<rootDir>/components/$1',
         '^@/pages/(.*)$': '<rootDir>/pages/$1',
         '^@/redux/(.*)$': '<rootDir>/redux/$1',
+        '^@/lib/(.*)$': '<rootDir>/lib/$1',
     }
 }
 
