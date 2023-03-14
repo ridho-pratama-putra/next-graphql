@@ -35,9 +35,8 @@ export default function Post({albums}) {
                 <div className={styles.card}>
                     <h1 className={utilsStyles.heading2Xl}>not first & second Post</h1>
                     <ImageLayout imageSource="/images/img.png"></ImageLayout>
-                    <p className={utilsStyles.headingXl}>Lets make group call by entering room name</p>
-                    <p className={utilsStyles.headingMd}>this group call will be recorded, please allow permissions for
-                        mic & camera
+                    <p className={utilsStyles.headingXl}>implematation of fallback: true</p>
+                    <p className={utilsStyles.headingMd}>{router.asPath}
                     </p>
                     <p className={utilsStyles.padding30px}>
                         <Link href="/">
@@ -101,8 +100,8 @@ export async function getStaticPaths() {
     ]
     /*
     * fallback true will ignore render 404.
-    * when path is not exist (via url or refresh), isFallback will have TRUE value and show loading.. then show page
-    * when path is not exist (via <Link>), isFallback will have FALSE value and NOT show loading.. then show page
+    * when path is not exist (via url or refresh), fallback have TRUE value then show loading.. then show page
+    * when path is not exist (via <Link>), fallback have FALSE value then NOT show loading.. then show page
     * */
     return {
         paths,
