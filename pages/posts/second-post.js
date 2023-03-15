@@ -8,7 +8,7 @@ import Layout from "@/components/layout";
 import Alert from "@/components/alert";
 import {loadArtisById} from "@/lib/load-artis-by-id";
 /*
-* single component first post
+* single component second post
 * */
 export default function FirstPost({artist}) {
     return (
