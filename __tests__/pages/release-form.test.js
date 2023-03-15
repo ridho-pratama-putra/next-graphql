@@ -23,6 +23,11 @@ describe('ReleaseForm', function () {
         });
     });
 
+    it('renders toMatchSnapshot', () => {
+        const {asFragment} = render(<Provider store={store}><ReleaseForm/></Provider>)
+        expect(asFragment()).toMatchSnapshot()
+    });
+
     it('should render form with button submit, pause, resume and input field', function () {
         render(<Provider store={store}><ReleaseForm/></Provider>)
         const inputFileLabel = screen.getByTestId('label-input-file')
