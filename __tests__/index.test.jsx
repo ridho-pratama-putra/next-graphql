@@ -11,5 +11,10 @@ describe('Index', () => {
         })
 
         expect(heading).toBeInTheDocument()
-    })
+    });
+
+    it('renders toMatchSnapshot', () => {
+        const {asFragment} = render(<Home />)
+        expect(asFragment()).toMatchSnapshot()
+    });
 })
