@@ -1,4 +1,4 @@
-import {render, screen, fireEvent, waitFor} from '@testing-library/react'
+import {render, screen, fireEvent, waitFor, act} from '@testing-library/react'
 import ReleaseForm from '@/pages/forms/release-form'
 import '@testing-library/jest-dom'
 import {Provider} from "react-redux";
@@ -18,7 +18,14 @@ describe('ReleaseForm', function () {
         jest.clearAllMocks();
 
         // idk how to properly reset store, using existing action instead
-        store.dispatch(resetProcess());
+        act(() => {
+            store.dispatch(resetProcess());
+        });
+    });
+
+    it('renders toMatchSnapshot', () => {
+        const {asFragment} = render(<Provider store={store}><ReleaseForm/></Provider>)
+        expect(asFragment()).toMatchSnapshot()
     });
 
     it('should render form with button submit, pause, resume and input field', function () {
