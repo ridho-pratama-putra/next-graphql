@@ -44,6 +44,10 @@ export default function Home() {
                 <h3>dynamic routes Post sicth &rarr;</h3>
                 <p>implementation of getStaticProps.</p>
             </Link>
+            <Link href="/posts/seventh-post" className={styles.card}>
+                <h3>dynamic routes Post seventh &rarr;</h3>
+                <p>implementation of useEffect.</p>
+            </Link>
             <Link href="/forms/release-form" className={styles.card}>
                 <h3>Release forms &rarr;</h3>
                 <p>implementation of submit chunked type media.</p>
