@@ -1,26 +1,32 @@
-import {render, screen, fireEvent, waitFor, act} from '@testing-library/react'
+import {render, screen, fireEvent, waitFor, act, cleanup} from '@testing-library/react'
 import ReleaseForm from '@/pages/forms/release-form'
 import '@testing-library/jest-dom'
 import {Provider} from "react-redux";
-import {store} from "@/redux/store";
-import { upload }from "@/lib/upload"
-import {resetProcess} from "@/redux/fileUploadProcessSlice";
-
+import {upload} from "@/lib/upload"
+import {configureStore} from '@reduxjs/toolkit'
+import fileUploadProcessReducer from "@/redux/fileUploadProcessSlice";
+import fileUploadProgressReducer from "@/redux/fileUploadProgressSlice";
 
 jest.mock('@/lib/upload');
 
+let store;
 describe('ReleaseForm', function () {
     beforeEach(() => {
         jest.resetAllMocks();
+        store = configureStore({
+            reducer: {
+                fileUploadProgress: fileUploadProgressReducer,
+                fileUploadProcess: fileUploadProcessReducer,
+            }, middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+                serializableCheck: false,
+            })
+        });
     });
 
     afterEach(() => {
         jest.clearAllMocks();
 
         // idk how to properly reset store, using existing action instead
-        act(() => {
-            store.dispatch(resetProcess());
-        });
     });
 
     it('renders toMatchSnapshot', () => {
@@ -53,8 +59,8 @@ describe('ReleaseForm', function () {
         render(<Provider store={store}><ReleaseForm/></Provider>)
         upload.mockResolvedValue(null);
         const inputFile = screen.getByTestId('input-file');
-        const submitButton = screen.getByRole('button', { name: 'Submit' });
-        fireEvent.change(inputFile, {target: {files: [new File(['test'], 'test.txt', { type: 'text/plain' })],},});
+        const submitButton = screen.getByRole('button', {name: 'Submit'});
+        fireEvent.change(inputFile, {target: {files: [new File(['test'], 'test.txt', {type: 'text/plain'})],},});
 
         fireEvent.click(submitButton);
 
@@ -65,7 +71,7 @@ describe('ReleaseForm', function () {
         });
     });
 
-    it('should call start when click submit', function (done) {
+    it('should call mockStartUploads when click submit', function (done) {
         render(<Provider store={store}><ReleaseForm/></Provider>)
         const mockFindPreviousUploads = jest.fn().mockImplementationOnce(() => Promise.resolve([]));
         const mockStartUploads = jest.fn();
@@ -74,8 +80,8 @@ describe('ReleaseForm', function () {
             findPreviousUploads: mockFindPreviousUploads
         }));
         const inputFile = screen.getByTestId('input-file');
-        const submitButton = screen.getByRole('button', { name: 'Submit' });
-        fireEvent.change(inputFile, {target: {files: [new File(['test'], 'test.txt', { type: 'text/plain' })],},});
+        const submitButton = screen.getByRole('button', {name: 'Submit'});
+        fireEvent.change(inputFile, {target: {files: [new File(['test'], 'test.txt', {type: 'text/plain'})],},});
 
         fireEvent.click(submitButton);
 
@@ -96,9 +102,9 @@ describe('ReleaseForm', function () {
             findPreviousUploads: jest.fn().mockImplementationOnce(() => Promise.resolve([]))
         }));
         const inputFile = screen.getByTestId('input-file');
-        const submitButton = screen.getByRole('button', { name: 'Submit' });
-        const pauseButton = screen.getByRole('button', { name: 'pause' });
-        fireEvent.change(inputFile, {target: {files: [new File(['test'], 'test.txt', { type: 'text/plain' })],},});
+        const submitButton = screen.getByRole('button', {name: 'Submit'});
+        const pauseButton = screen.getByRole('button', {name: 'pause'});
+        fireEvent.change(inputFile, {target: {files: [new File(['test'], 'test.txt', {type: 'text/plain'})],},});
 
         fireEvent.click(submitButton);
 
@@ -122,17 +128,17 @@ describe('ReleaseForm', function () {
         }));
 
         const inputFile = screen.getByTestId('input-file');
-        const submitButton = screen.getByRole('button', { name: 'Submit' });
-        const pauseButton = screen.getByRole('button', { name: 'pause' });
-        const resumeButton = screen.getByRole('button', { name: 'resume' });
-        fireEvent.change(inputFile, {target: {files: [new File(['test'], 'test.txt', { type: 'text/plain' })],},});
+        const submitButton = screen.getByRole('button', {name: 'Submit'});
+        const pauseButton = screen.getByRole('button', {name: 'pause'});
+        const resumeButton = screen.getByRole('button', {name: 'resume'});
+        fireEvent.change(inputFile, {target: {files: [new File(['test'], 'test.txt', {type: 'text/plain'})],},});
 
         fireEvent.click(submitButton);
         fireEvent.click(pauseButton);
         fireEvent.click(resumeButton);
         waitFor(() => {
             const state = store.getState();
-            expect(state.fileUploadProcess).not.toEqual({ value: null });
+            expect(state.fileUploadProcess).not.toEqual({value: null});
             expect(mockResumeFromPreviousUpload).toHaveBeenCalled();
             done();
         });
