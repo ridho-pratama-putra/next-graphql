@@ -30,22 +30,22 @@ function ReleaseForm() {
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-        const data = {
-            first: event.target.first.value,
-            last: event.target.last.value,
-        }
-        const JSONdata = JSON.stringify(data)
-        const endpoint = '/api/form'
-        const options = {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSONdata
-        }
-        const response = await fetch(endpoint, options)
-        const result = await response.json()
-        alert(`Is this your full name: ${result.data}`)
+        // const data = {
+        //     first: event.target.first.value,
+        //     last: event.target.last.value,
+        // }
+        // const JSONdata = JSON.stringify(data)
+        // const endpoint = '/api/form'
+        // const options = {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSONdata
+        // }
+        // const response = await fetch(endpoint, options)
+        // const result = await response.json()
+        // alert(`Is this your full name: ${result.data}`)
 
         const tusioUploadProcess = await upload(dispatch, event.target.file);
         dispatch(setProcess(tusioUploadProcess));
@@ -73,10 +73,10 @@ function ReleaseForm() {
     return (
         <div>
             <form role='form-upload' onSubmit={handleSubmit}>
-                <label htmlFor="first">First name:</label>
-                <input type="text" id="first" name="first"/>
-                <label htmlFor="last">Last name:</label>
-                <input type="text" id="last" name="last"/>
+                {/*<label htmlFor="first">First name:</label>*/}
+                {/*<input type="text" id="first" name="first"/>*/}
+                {/*<label htmlFor="last">Last name:</label>*/}
+                {/*<input type="text" id="last" name="last"/>*/}
                 <label htmlFor="file" data-testid='label-input-file'>file:</label>
                 <input type="file" id="file" name="file" ref={fileFormRef} data-testid='input-file' disabled={disabledForm}/>
                 <button type="submit" disabled={disabledForm}>Submit</button>
