@@ -35,9 +35,11 @@ export default function FirstPost({artist}) {
                         </Link>
                     </p>
                 </div>
-                {artist !== null && (<li key={artist.id}>
-                    {artist.name}
-                </li>)}
+                {artist !== null && artist.map(({id, name}) => (
+                    <li key={id}>
+                        {name} ({id})
+                    </li>
+                ))}
                 {artist == null && (<p>Try again later</p>)}
             </main>
         </Layout>);
@@ -45,12 +47,11 @@ export default function FirstPost({artist}) {
 
 export async function getServerSideProps() {
     try {
-        console.log('getServerSideProps called');
-        let data = await loadArtisById("63c911b6a272812098224d7c");
-        await console.log('loaded data ', data)
+        const data = await fetch("https://jsonplaceholder.typicode.com/users")
+        const result = await data.json()
         return {
             props: {
-                artist: data.artistById
+                artist: result
             }
         }
     } catch (e) {

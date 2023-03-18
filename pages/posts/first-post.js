@@ -7,10 +7,9 @@ import ImageLayout from "@/components/image-layout";
 import Layout from "@/components/layout";
 import Alert from "@/components/alert";
 import {useSelector} from "react-redux";
-import axios from "axios";
 /*
-* single component first post
-* */
+ * single component first post
+ * */
 export default function FirstPost({albums}) {
 
     const progress = useSelector((state) => state.fileUploadProgress.value);
@@ -38,9 +37,9 @@ export default function FirstPost({albums}) {
                         </Link>
                     </p>
                 </div>
-                {albums !== null && albums.map(({id, title}) => (
+                {albums !== null && albums.map(({id, name}) => (
                     <li key={id}>
-                        {title} ({id})
+                        {name} ({id})
                     </li>
                 ))}
                 {albums == null && (<p>Try again later</p>)}
@@ -48,14 +47,13 @@ export default function FirstPost({albums}) {
         </Layout>);
 }
 
-
-export async function getStaticProps({params}) {
+export async function getStaticProps() {
     try {
-        let {data} = await axios.get("http://localhost:8080/allRelease")
-        console.log('[] getStaticProps')
+        const data = await fetch("https://jsonplaceholder.typicode.com/users")
+        const result = await data.json()
         return {
             props: {
-                albums: data,
+                albums: result
             }
         }
     } catch (e) {
