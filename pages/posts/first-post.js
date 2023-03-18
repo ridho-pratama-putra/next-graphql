@@ -6,8 +6,8 @@ import Script from "next/script";
 import ImageLayout from "@/components/image-layout";
 import Layout from "@/components/layout";
 import Alert from "@/components/alert";
-import {loadAllReleases} from "@/lib/load-all-releases";
 import {useSelector} from "react-redux";
+import axios from "axios";
 /*
 * single component first post
 * */
@@ -38,7 +38,7 @@ export default function FirstPost({albums}) {
                         </Link>
                     </p>
                 </div>
-                {albums !== null && albums.map(({node: {id, title}}) => (
+                {albums !== null && albums.map(({id, title}) => (
                     <li key={id}>
                         {title} ({id})
                     </li>
@@ -48,19 +48,14 @@ export default function FirstPost({albums}) {
         </Layout>);
 }
 
-export async function getStaticProps() {
+
+export async function getStaticProps({params}) {
     try {
-        let data = await loadAllReleases(3, "");
-        console.log('loaded data ', data)
+        let {data} = await axios.get("http://localhost:8080/allRelease")
+        console.log('[] getStaticProps')
         return {
             props: {
-                albums: data.allReleases.edges,
-                pageInfo: {
-                    hasPreviousPage: data.allReleases.pageInfo.hasPreviousPage,
-                    hasNextPage: data.allReleases.pageInfo.hasNextPage,
-                    startCursor: data.allReleases.pageInfo.startCursor,
-                    endCursor: data.allReleases.pageInfo.endCursor
-                }
+                albums: data,
             }
         }
     } catch (e) {

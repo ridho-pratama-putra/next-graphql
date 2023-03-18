@@ -8,7 +8,7 @@ import Layout from "@/components/layout";
 import Alert from "@/components/alert";
 import DateComponent from "@/components/date-component";
 import {useRouter} from "next/router";
-import {loadAllReleases} from "@/lib/load-all-releases";
+import {loadAllReleases} from "@/lib/axios-all-release";
 /*
 * single component first post
 * */
@@ -45,7 +45,7 @@ export default function Post({albums}) {
                     </p>
                 </div>
                 {(albums == null) && (<div>Try Again later</div>)}
-                {albums !== null && albums.map(({node: {id, title, creationDate}}) => (
+                {albums !== null && albums.map(({id, title, creationDate}) => (
                     <li key={id}>
                         {title}
                         <br/>
@@ -59,16 +59,11 @@ export default function Post({albums}) {
 
 export async function getStaticProps({params}) {
     try {
-        let data = await loadAllReleases(3, "");
+        let data = await loadAllReleases();
+        console.log('[] getStaticProps')
         return {
             props: {
-                albums: data.allReleases.edges,
-                pageInfo: {
-                    hasPreviousPage: data.allReleases.pageInfo.hasPreviousPage,
-                    hasNextPage: data.allReleases.pageInfo.hasNextPage,
-                    startCursor: data.allReleases.pageInfo.startCursor,
-                    endCursor: data.allReleases.pageInfo.endCursor
-                }
+                albums: data,
             }
         }
     } catch (e) {
