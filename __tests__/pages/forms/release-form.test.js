@@ -1,4 +1,4 @@
-import {render, screen, fireEvent, waitFor, act, cleanup} from '@testing-library/react'
+import {render, screen, fireEvent, waitFor} from '@testing-library/react'
 import ReleaseForm from '@/pages/forms/release-form'
 import '@testing-library/jest-dom'
 import {Provider} from "react-redux";

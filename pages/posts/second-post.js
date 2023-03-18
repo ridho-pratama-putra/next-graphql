@@ -47,7 +47,7 @@ export async function getServerSideProps() {
     try {
         console.log('getServerSideProps called');
         let data = await loadArtisById("63c911b6a272812098224d7c");
-        await console.log('loaded data')
+        await console.log('loaded data ', data)
         return {
             props: {
                 artist: data.artistById

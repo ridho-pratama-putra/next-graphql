@@ -12,4 +12,5 @@ describe('Index', () => {
 
         expect(heading).toBeInTheDocument()
     });
+
 })
