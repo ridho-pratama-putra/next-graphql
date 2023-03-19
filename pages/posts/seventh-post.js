@@ -10,19 +10,20 @@ import {useEffect, useState} from "react";
 /*
 * single component first post
 * */
-export default function FirstPost({albums}) {
+export default function SeventhPost({albums}) {
     const [count, setCount] = useState(0);
     const [satu, setSatu] = useState(0);
 
     // Similar to componentDidMount and componentDidUpdate:
     // also executed when
+    // - only once when
     // - any state changes when no deps
     // - any state changes as listed in deps list
     useEffect(() => {
         console.log('sata')
         // Update the document title using the browser API
         document.title = `You clicked ${count} times`;
-    },[satu]);
+    },[]);
 
     return (
         <Layout className={styles.container}>
