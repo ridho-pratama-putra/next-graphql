@@ -21,7 +21,7 @@ export default function EighthPost() {
 
     async function fetcher(url) {
         console.log('fetcher url ', url)
-        const allReleases = await fetch('/api/allReleases');
+        const allReleases = await fetch(url);
         const res = await allReleases.json();
         console.log('fetcher allReleases ', res)
 

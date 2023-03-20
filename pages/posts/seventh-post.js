@@ -16,14 +16,14 @@ export default function SeventhPost({albums}) {
 
     // Similar to componentDidMount and componentDidUpdate:
     // also executed when
-    // - only once when
+    // - only once when empty list
     // - any state changes when no deps
     // - any state changes as listed in deps list
     useEffect(() => {
         console.log('sata')
         // Update the document title using the browser API
         document.title = `You clicked ${count} times`;
-    },[]);
+    });
 
     return (
         <Layout className={styles.container}>
@@ -40,7 +40,7 @@ export default function SeventhPost({albums}) {
             <main>
                 <Alert type={'success'} children={'children of alert'}></Alert>
                 <div className={styles.card}>
-                    <h1 className={utilsStyles.heading2Xl}>First Post</h1>
+                    <h1 className={utilsStyles.heading2Xl}>Seventh Post</h1>
                     <ImageLayout imageSource="/images/img.png"></ImageLayout>
                     <p className={utilsStyles.headingXl}>implementation of useEffect</p>
                     <p className={utilsStyles.headingMd}>{count}</p>

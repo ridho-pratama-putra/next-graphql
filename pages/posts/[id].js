@@ -8,7 +8,7 @@ import Layout from "@/components/layout";
 import Alert from "@/components/alert";
 import DateComponent from "@/components/date-component";
 import {useRouter} from "next/router";
-import {loadAllReleases} from "@/lib/axios-all-release";
+import {loadAllReleases} from "@/lib/load-all-releases";
 /*
 * single component first post
 * */
@@ -45,28 +45,25 @@ export default function Post({albums}) {
                     </p>
                 </div>
                 {(albums == null) && (<div>Try Again later</div>)}
-                {albums !== null && albums.map(({id, title, creationDate}) => (
+                {albums !== null && albums.map(({id, email}) => (
                     <li key={id}>
-                        {title}
-                        <br/>
-                        <DateComponent dateString={creationDate}/>
-                        <br/>
+                        {email}
                     </li>
                 ))}
             </main>
         </Layout>);
 }
 
-export async function getStaticProps({params}) {
+export async function getStaticProps() {
     try {
-        let data = await loadAllReleases();
-        console.log('[] getStaticProps')
+        const {users} = await loadAllReleases(3, null)
         return {
             props: {
-                albums: data,
+                albums: users
             }
-        }
+        };
     } catch (e) {
+        console.log('e ::: ', e)
         return {
             props: {
                 albums: null
