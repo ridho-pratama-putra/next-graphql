@@ -52,6 +52,10 @@ export default function Home() {
                 <h3>Release forms &rarr;</h3>
                 <p>implementation of submit chunked type media.</p>
             </Link>
+            <Link href="/posts/eighth-post" className={styles.card}>
+                <h3>dynamic routes Post eighth &rarr;</h3>
+                <p>implementation of SWR.</p>
+            </Link>
         </div>
       </main>
 
