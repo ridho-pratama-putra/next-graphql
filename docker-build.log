@@ -1,0 +1,139 @@
+#1 [internal] load build definition from Dockerfile
+#1 sha256:3418cb0ab3db5a2a127f5f567d0396dfe5b2ff1e9f667f46da5ee0892e75e41f
+#1 transferring dockerfile: 129B done
+#1 DONE 0.0s
+
+#2 [internal] load .dockerignore
+#2 sha256:55d54a8e591cb31b5172fcb4dd5430adc0ef8586180423768815c9a2cb759f58
+#2 transferring context: 2B done
+#2 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/node:18-alpine
+#3 sha256:5ee8ea8626137e4a4e007f934eed3f693a5155be1152f5d3acaa7750c4ab9271
+#3 ...
+
+#4 [auth] library/node:pull token for registry-1.docker.io
+#4 sha256:c267cb99fb526532115950845fbe63016af9727b1c1f9bde244a0c011559681f
+#4 DONE 0.0s
+
+#3 [internal] load metadata for docker.io/library/node:18-alpine
+#3 sha256:5ee8ea8626137e4a4e007f934eed3f693a5155be1152f5d3acaa7750c4ab9271
+#3 DONE 2.5s
+
+#5 [base 1/1] FROM docker.io/library/node:18-alpine@sha256:ffc770cdc09c9e83cccd99d663bb6ed56cfaa1bab94baf1b12b626aebeca9c10
+#5 sha256:b5ee93a559568cff8128fa13cba337645c4977f4b92404c52d3c72922eea4598
+#5 DONE 0.0s
+
+#11 [internal] load build context
+#11 sha256:8c0f0b86193ed4e9d449839915a84908e427c6a5bb1416fec0e336429b569163
+#11 transferring context: 41.49MB 1.0s done
+#11 DONE 1.1s
+
+#13 [deps 4/4] RUN   if [ -f yarn.lock ]; then yarn --frozen-lockfile;   elif [ -f package-lock.json ]; then npm ci;   elif [ -f pnpm-lock.yaml ]; then yarn global add pnpm && pnpm i --frozen-lockfile;   else echo "Lockfile not found." && exit 1;   fi
+#13 sha256:aeed42ae608180ba38f31b849a209d508c5559a4d2514d8b5e58b190bc41e263
+#13 CACHED
+
+#6 [runner 1/6] WORKDIR /app
+#6 sha256:04d48ce9fb835df7b5f8efea4b8e594240ce275818aba5ae186f319cb60b7f09
+#6 CACHED
+
+#9 [deps 1/4] RUN apk add --no-cache libc6-compat
+#9 sha256:befa1cf37a34a294a4eb373888e1402d8a4eeed18bcdf4a5be39f0b0d08c1be4
+#9 CACHED
+
+#10 [deps 2/4] WORKDIR /app
+#10 sha256:52c7b90a615512041af57320c4139488aab0b4e2c84a75e97c57b1c6ae04008b
+#10 CACHED
+
+#12 [deps 3/4] COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
+#12 sha256:afea4c302a1e0395cad9bee8d7e9895f5446c7bdb6e7cc4e31b2408d00ac0dc2
+#12 CACHED
+
+#14 [builder 2/4] COPY --from=deps /app/node_modules ./node_modules
+#14 sha256:162882454e3d0f936a7773cb755edc8f3d51f1a2cb97e6be26adcc5613596038
+#14 CACHED
+
+#15 [builder 3/4] COPY . .
+#15 sha256:f178281dcd13a0183d09af1070ecf83738cabe69089597ad49424a2952afb00e
+#15 DONE 3.0s
+
+#16 [builder 4/4] RUN yarn build
+#16 sha256:b2fed3a1c0eb209291008f1e423424ea7ad1821cb2d62f1eadc52d07371880ef
+#16 0.326 yarn run v1.22.19
+#16 0.351 $ next build
+#16 0.579 info  - Loaded env from /app/.env
+#16 0.683 Attention: Next.js now collects completely anonymous telemetry regarding usage.
+#16 0.683 This information is used to shape Next.js' roadmap and prioritize features.
+#16 0.683 You can learn more, including how to opt-out if you'd not like to participate in this anonymous program, by visiting the following URL:
+#16 0.683 https://nextjs.org/telemetry
+#16 0.683 
+#16 0.784 info  - Linting and checking validity of types...
+#16 0.940 info  - Creating an optimized production build...
+#16 6.727 info  - Compiled successfully
+#16 6.727 info  - Collecting page data...
+#16 7.285 info  - Generating static pages (0/11)
+#16 7.342 rerender
+#16 7.343 data  undefined
+#16 7.343 error  undefined
+#16 7.356 info  - Generating static pages (2/11)
+#16 7.382 info  - Generating static pages (5/11)
+#16 8.213 info  - Generating static pages (8/11)
+#16 8.808 info  - Generating static pages (11/11)
+#16 8.848 info  - Finalizing page optimization...
+#16 8.855 
+#16 8.883 Route (pages)                              Size     First Load JS
+#16 8.883 ┌ ○ /                                      4.07 kB        91.7 kB
+#16 8.883 ├   └ css/aa41fb1ba1818c75.css             486 B
+#16 8.883 ├   /_app                                  0 B            85.6 kB
+#16 8.883 ├ ○ /404                                   270 B          85.9 kB
+#16 8.883 ├ λ /api/allReleases                       0 B            85.6 kB
+#16 8.883 ├ λ /api/form                              0 B            85.6 kB
+#16 8.883 ├ ○ /forms/release-form                    19 kB           105 kB
+#16 8.883 ├ ● /posts/[id] (3088 ms)                  1.37 kB        92.7 kB
+#16 8.883 ├   ├ /posts/fifth-post (1248 ms)
+#16 8.883 ├   ├ /posts/fourth-post (1007 ms)
+#16 8.883 ├   └ /posts/third-post (829 ms)
+#16 8.883 ├ ○ /posts/eighth-post                     5.26 kB        96.6 kB
+#16 8.883 ├ ● /posts/first-post                      1.34 kB        92.6 kB
+#16 8.883 ├ λ /posts/second-post                     43.5 kB         135 kB
+#16 8.883 └ ○ /posts/seventh-post                    1.33 kB        92.6 kB
+#16 8.883 + First Load JS shared by all              85.6 kB
+#16 8.883   ├ chunks/framework-ad45764ecfcae9e5.js   45.4 kB
+#16 8.883   ├ chunks/main-1227de1dc46e1332.js        27.1 kB
+#16 8.883   ├ chunks/pages/_app-b3e765382195c080.js  12.3 kB
+#16 8.883   └ chunks/webpack-ee7e63bc15b31913.js     815 B
+#16 8.883 
+#16 8.883 λ  (Server)  server-side renders at runtime (uses getInitialProps or getServerSideProps)
+#16 8.883 ○  (Static)  automatically rendered as static HTML (uses no initial props)
+#16 8.883 ●  (SSG)     automatically generated as static HTML + JSON (uses getStaticProps)
+#16 8.883 
+#16 9.799 Done in 9.48s.
+#16 DONE 9.9s
+
+#7 [runner 2/6] RUN addgroup --system --gid 1001 nodejs
+#7 sha256:f8b0cf1c5521e12bcd5c38de930ba4e0e29047baa38933e11649712ff3682497
+#7 CACHED
+
+#8 [runner 3/6] RUN adduser --system --uid 1001 nextjs
+#8 sha256:87f597bcce14dc717679b047a550f2bd7ddd53573f5d534a8a26f5e9d3850cb5
+#8 CACHED
+
+#17 [runner 4/6] COPY --from=builder /app/public ./public
+#17 sha256:172744a7455be619acc91b06eda3a149598564e1f2898163e98b7725596ab6fd
+#17 CACHED
+
+#18 [runner 5/6] COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+#18 sha256:3d86f24b826c6d0501e29f5e2b16ad01b35669bd28abe0582fc9ca21dbb39c8d
+#18 DONE 0.2s
+
+#19 [runner 6/6] COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+#19 sha256:8bb38702fedd3f181b69d16747368466f2bc01ef0fd2880886c2b00d5e7b30ce
+#19 DONE 0.0s
+
+#20 exporting to image
+#20 sha256:e8c613e07b0b7ff33893b694f7759a10d42e180f2b4dc349fb57dc6b71dcab00
+#20 exporting layers
+#20 exporting layers 0.1s done
+#20 writing image sha256:9aacda2724bad115086825ce0e2097010519844780bea19f03b3dd52ab71b85c done
+#20 naming to docker.io/library/nextjs-docker:0.0.1-SNAPSHOT done
+#20 DONE 0.1s
