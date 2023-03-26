@@ -56,6 +56,10 @@ export default function Home() {
                 <h3>dynamic routes Post eighth &rarr;</h3>
                 <p>implementation of SWR.</p>
             </Link>
+            <Link href="/forms/multiple-release-form" className={styles.card}>
+                <h3>dynamic routes Post ninth &rarr;</h3>
+            <p>implementation of multiple upload.</p>
+        </Link>
         </div>
       </main>
 
