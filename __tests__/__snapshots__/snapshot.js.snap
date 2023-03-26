@@ -167,6 +167,21 @@ exports[`renders homepage unchanged 1`] = `
             implementation of SWR.
           </p>
         </a>
+        <a
+          class="card"
+          href="/forms/multiple-release-form"
+        >
+          <h3
+            class="jsx-25781291bf750"
+          >
+            dynamic routes Post ninth →
+          </h3>
+          <p
+            class="jsx-25781291bf750"
+          >
+            implementation of multiple upload.
+          </p>
+        </a>
       </div>
     </main>
     <footer

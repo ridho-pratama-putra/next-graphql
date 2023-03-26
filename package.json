@@ -4,7 +4,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "test": "jest --watchAll=false"
+    "test": "jest --watchAll=false",
+    "test:updateSnapshot": "jest --updateSnapshot"
   },
   "dependencies": {
     "@apollo/client": "^3.7.4",
