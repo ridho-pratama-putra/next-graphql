@@ -6,15 +6,29 @@ import Script from "next/script";
 import ImageLayout from "@/components/image-layout";
 import Layout from "@/components/layout";
 import Alert from "@/components/alert";
-import {loadArtisById} from "@/lib/load-artis-by-id";
+import {useEffect, useState} from "react";
 /*
-* single component second post
+* single component first post
 * */
-export default function FirstPost({artist}) {
+export default function SeventhPost({albums}) {
+    const [count, setCount] = useState(0);
+    const [satu, setSatu] = useState(0);
+
+    // Similar to componentDidMount and componentDidUpdate:
+    // also executed when
+    // - only once when empty list
+    // - any state changes when no deps
+    // - any state changes as listed in deps list
+    useEffect(() => {
+        console.log('sata')
+        // Update the document title using the browser API
+        document.title = `You clicked ${count} times`;
+    });
+
     return (
         <Layout className={styles.container}>
             <Head>
-                <title>Second Post</title>
+                <title>Seventh Post</title>
             </Head>
             <Script
                 src="https://connect.facebook.net/en_US/sdk.js"
@@ -26,39 +40,19 @@ export default function FirstPost({artist}) {
             <main>
                 <Alert type={'success'} children={'children of alert'}></Alert>
                 <div className={styles.card}>
-                    <h1 className={utilsStyles.heading2Xl}>Second Post</h1>
+                    <h1 className={utilsStyles.heading2Xl}>Seventh Post</h1>
                     <ImageLayout imageSource="/images/img.png"></ImageLayout>
-                    <p className={utilsStyles.headingXl}>implementation of getServerSideProps</p>
+                    <p className={utilsStyles.headingXl}>implementation of useEffect</p>
+                    <p className={utilsStyles.headingMd}>{count}</p>
+                    <button onClick={() => setCount(count + 1)}>add</button>
+                    <button onClick={() => setCount(count - 1)}>min</button>
+
                     <p className={utilsStyles.padding30px}>
                         <Link href="/">
                             &larr;back to Dashboard
                         </Link>
                     </p>
                 </div>
-                {artist !== null && artist.map(({id, name}) => (
-                    <li key={id}>
-                        {name} ({id})
-                    </li>
-                ))}
-                {artist == null && (<p>Try again later</p>)}
             </main>
         </Layout>);
-}
-
-export async function getServerSideProps() {
-    try {
-        const data = await fetch("https://jsonplaceholder.typicode.com/users")
-        const result = await data.json()
-        return {
-            props: {
-                artist: result
-            }
-        }
-    } catch (e) {
-        return {
-            props: {
-                artist: null
-            }
-        }
-    }
 }

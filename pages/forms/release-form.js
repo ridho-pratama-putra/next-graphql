@@ -1,82 +1,89 @@
-import React from 'react';
+import React, {useEffect, useRef, useState} from 'react';
+import { useSelector, useDispatch } from 'react-redux'
+import { upload } from '@/lib/upload'
+import {resetProcess, setProcess} from "@/redux/fileUploadProcessSlice";
 
 function ReleaseForm() {
+    const dispatch = useDispatch();
+    const [disabledForm, setDisabledForm] = useState(false);
+    const fileFormRef = useRef(null);
+    const { progress, process } = useSelector(state => ({
+        progress: state.fileUploadProgress.value,
+        process: state.fileUploadProcess.value
+    }));
+
+    useEffect(() => {
+        if (process) {
+            handleResume();
+        }
+        return () => {};
+    }, [process]);
+
+    useEffect(() => {
+        if (100 === progress) {
+            setDisabledForm(false);
+            fileFormRef.current.value = null;
+            dispatch(resetProcess(null))
+        }
+        return () => {};
+    }, [progress]);
 
     const handleSubmit = async (event) => {
-        // Stop the form from submitting and refreshing the page.
-        event.preventDefault()
+        event.preventDefault();
+        // const data = {
+        //     first: event.target.first.value,
+        //     last: event.target.last.value,
+        // }
+        // const JSONdata = JSON.stringify(data)
+        // const endpoint = '/api/form'
+        // const options = {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSONdata
+        // }
+        // const response = await fetch(endpoint, options)
+        // const result = await response.json()
+        // alert(`Is this your full name: ${result.data}`)
 
-        // Get data from the form.
-        const data = {
-            first: event.target.first.value,
-            last: event.target.last.value,
+        const tusioUploadProcess = await upload(dispatch, event.target.file);
+        dispatch(setProcess(tusioUploadProcess));
+        setDisabledForm(true)
+    }
+
+    const handlePause = () => {
+        if (process) {
+            process.abort();
         }
+    }
 
-        // Send the data to the server in JSON format.
-        const JSONdata = JSON.stringify(data)
-
-        // API endpoint where we send form data.
-        const endpoint = '/api/form'
-
-        // Form the request for sending data to the server.
-        const options = {
-            // The method is POST because we are sending data.
-            method: 'POST',
-            // Tell the server we're sending JSON.
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            // Body of the request is the JSON data we created above.
-            body: JSONdata
+    const handleResume = () => {
+        if (process === null || process === 'undefined') {
+            return
         }
-
-        // Send the form data to our forms API on Vercel and get a response.
-        console.log('next to data 1')
-        const response = await fetch(endpoint, options)
-        console.log('next to data 2')
-
-        // Get the response data from server as JSON.
-        // If server returns the name submitted, that means the form works.
-        console.log('next to file 1')
-        const result = await response.json()
-        console.log('next to file 3')
-        alert(`Is this your full name: ${result.data}`)
-        console.log('next to file 4 ', result.data)
-
-        // API endpoint where we send form data.
-        const imageEndpoint = '/api/file';
-        const formData = new FormData();
-        formData.append("file", event.target.file.files[0]);
-        formData.append("fileName", event.target.file.files[0].name);
-        formData.append("fileType", event.target.file.files[0].type);
-
-        // Form the request for sending data to the server.
-        const imageOptions = {
-            // The method is POST because we are sending data.
-            method: 'POST',
-            // Body of the request is the JSON data we created above.
-            body: formData,
-        }
-
-        // Send the form data to our forms API on Vercel and get a response.
-        const imageResponse = await fetch(imageEndpoint, imageOptions)
-
-        const imageResult = await imageResponse.json()
-        console.log('next to file 3')
-        alert(`Is this your imageResult: ${imageResult.data}`)
+        process.findPreviousUploads().then(function (previousUploads) {
+            if (previousUploads.length) {
+                process.resumeFromPreviousUpload(previousUploads[0]);
+            }
+            process.start();
+        });
     }
 
     return (
         <div>
-            <form onSubmit={handleSubmit}>
-                <label htmlFor="first">First name:</label>
-                <input type="text" id="first" name="first"/>
-                <label htmlFor="last">Last name:</label>
-                <input type="text" id="last" name="last"/>
-                <label htmlFor="file">file:</label>
-                <input type="file" id="file" name="file"/>
-                <button type="submit">Submit</button>
+            <form role='form-upload' onSubmit={handleSubmit}>
+                {/*<label htmlFor="first">First name:</label>*/}
+                {/*<input type="text" id="first" name="first"/>*/}
+                {/*<label htmlFor="last">Last name:</label>*/}
+                {/*<input type="text" id="last" name="last"/>*/}
+                <label htmlFor="file" data-testid='label-input-file'>file:</label>
+                <input type="file" id="file" name="file" ref={fileFormRef} data-testid='input-file' disabled={disabledForm}/>
+                <button type="submit" disabled={disabledForm}>Submit</button>
             </form>
+            <button onClick={handlePause}>pause</button>
+            <button onClick={handleResume}>resume</button>
+            <p>Progress {progress}% </p>
         </div>
     );
 }

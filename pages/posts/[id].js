@@ -3,10 +3,10 @@ import utilsStyles from "@/styles/Utils.module.css";
 import Link from "next/link";
 import Head from "next/head";
 import Script from "next/script";
-import ImageLayout from "@/components/ImageLayout";
-import Layout from "@/components/Layout";
-import Alert from "@/components/Alert";
-import DateComponent from "@/components/DateComponent";
+import ImageLayout from "@/components/image-layout";
+import Layout from "@/components/layout";
+import Alert from "@/components/alert";
+import DateComponent from "@/components/date-component";
 import {useRouter} from "next/router";
 import {loadAllReleases} from "@/lib/load-all-releases";
 /*
@@ -35,9 +35,8 @@ export default function Post({albums}) {
                 <div className={styles.card}>
                     <h1 className={utilsStyles.heading2Xl}>not first & second Post</h1>
                     <ImageLayout imageSource="/images/img.png"></ImageLayout>
-                    <p className={utilsStyles.headingXl}>Lets make group call by entering room name</p>
-                    <p className={utilsStyles.headingMd}>this group call will be recorded, please allow permissions for
-                        mic & camera
+                    <p className={utilsStyles.headingXl}>implematation of fallback: true</p>
+                    <p className={utilsStyles.headingMd}>{router.asPath}
                     </p>
                     <p className={utilsStyles.padding30px}>
                         <Link href="/">
@@ -46,33 +45,25 @@ export default function Post({albums}) {
                     </p>
                 </div>
                 {(albums == null) && (<div>Try Again later</div>)}
-                {albums !== null && albums.map(({node: {id, title, creationDate}}) => (
+                {albums !== null && albums.map(({id, email}) => (
                     <li key={id}>
-                        {title}
-                        <br/>
-                        <DateComponent dateString={creationDate}/>
-                        <br/>
+                        {email}
                     </li>
                 ))}
             </main>
         </Layout>);
 }
 
-export async function getStaticProps({params}) {
+export async function getStaticProps() {
     try {
-        let data = await loadAllReleases(3, "");
+        const {users} = await loadAllReleases(3, null)
         return {
             props: {
-                albums: data.allReleases.edges,
-                pageInfo: {
-                    hasPreviousPage: data.allReleases.pageInfo.hasPreviousPage,
-                    hasNextPage: data.allReleases.pageInfo.hasNextPage,
-                    startCursor: data.allReleases.pageInfo.startCursor,
-                    endCursor: data.allReleases.pageInfo.endCursor
-                }
+                albums: users
             }
-        }
+        };
     } catch (e) {
+        console.log('e ::: ', e)
         return {
             props: {
                 albums: null
@@ -101,8 +92,8 @@ export async function getStaticPaths() {
     ]
     /*
     * fallback true will ignore render 404.
-    * when path is not exist (via url or refresh), isFallback will have TRUE value and show loading.. then show page
-    * when path is not exist (via <Link>), isFallback will have FALSE value and NOT show loading.. then show page
+    * when path is not exist (via url or refresh), fallback have TRUE value then show loading.. then show page
+    * when path is not exist (via <Link>), fallback have FALSE value then NOT show loading.. then show page
     * */
     return {
         paths,

@@ -124,6 +124,21 @@ exports[`renders homepage unchanged 1`] = `
         </a>
         <a
           class="card"
+          href="/posts/seventh-post"
+        >
+          <h3
+            class="jsx-25781291bf750"
+          >
+            dynamic routes Post seventh →
+          </h3>
+          <p
+            class="jsx-25781291bf750"
+          >
+            implementation of useEffect.
+          </p>
+        </a>
+        <a
+          class="card"
           href="/forms/release-form"
         >
           <h3
@@ -135,6 +150,21 @@ exports[`renders homepage unchanged 1`] = `
             class="jsx-25781291bf750"
           >
             implementation of submit chunked type media.
+          </p>
+        </a>
+        <a
+          class="card"
+          href="/posts/eighth-post"
+        >
+          <h3
+            class="jsx-25781291bf750"
+          >
+            dynamic routes Post eighth →
+          </h3>
+          <p
+            class="jsx-25781291bf750"
+          >
+            implementation of SWR.
           </p>
         </a>
       </div>
