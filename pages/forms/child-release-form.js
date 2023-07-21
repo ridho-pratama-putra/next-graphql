@@ -32,7 +32,7 @@ function ChildReleaseForm() {
             retryDelays: [0, 3000, 5000, 10000, 20000],
             chunkSize: 1024 * 512,
             metadata: {
-                filename: file.name,
+                filename: encodeURIComponent(file.name),
                 filetype: file.type
             },
             onError: function (error) {

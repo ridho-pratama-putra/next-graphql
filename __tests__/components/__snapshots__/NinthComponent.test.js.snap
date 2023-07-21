@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ninth component should match snashot 1`] = `
+<DocumentFragment>
+  <h1>
+    Im just a living rockstar
+  </h1>
+  <button
+    data-testid="button-nih"
+  />
+</DocumentFragment>
+`;
